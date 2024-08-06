@@ -17,6 +17,7 @@ namespace BookStore.Controllers
     {
         private readonly BookInfoService _bookInfoService;
 
+
         public BarcodeController(BookInfoService bookInfoService)
         {
             _bookInfoService = bookInfoService;
