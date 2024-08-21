@@ -65,26 +65,21 @@ namespace ECommerceAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            [HttpPost("Login")]
-            public async Task<IActionResult> Login([FromBody] LoginModel model)
+        [HttpPost("Login")]
+        public async Task<IActionResult> Login([FromBody] LoginModel model)
+        {
+     
+
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
             {
-       
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
-
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password,false,false);
-
-            if (result.Succeeded)
-                    {
-                var user = await _userManager.FindByEmailAsync(model.Email);
                 var token = GenerateJwtToken(user);
-                    return Ok(new { Token = "Bearer " + token });
-                }
-
-                return Unauthorized("Invalid login attempt.");
+                return Ok(new { Token = "Bearer " + token });
             }
+            else    
+                return StatusCode(StatusCodes.Status500InternalServerError, "Böyle bir kullanıcı mevcut değil!");
+    
+        }
 
 
         private string GenerateJwtToken(ApplicationUser user)

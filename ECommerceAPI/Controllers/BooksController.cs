@@ -11,7 +11,6 @@ namespace ECommerceAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class BooksController : ControllerBase
     {
         private readonly BookLogic _bookLogic;
@@ -22,14 +21,15 @@ namespace ECommerceAPI.Controllers
         }   
 
         [HttpGet]
-        [Authorize]
+        [Route("getAll")]
         public async Task<ActionResult<IEnumerable<Book>>> GetBooks()
         {
             var books = await _bookLogic.GetAllBooks();
             return Ok(books);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet]
+        [Route("get/{id}")]
         public async Task<ActionResult<Book>> GetBook(int id)
         {
             var book = await _bookLogic.GetBookById(id);

@@ -44,5 +44,10 @@ namespace BookStore.Data.Services
                 await _context.SaveChangesAsync();
             }
         }
+
+        public async Task GetBookByTitle(string bookTitle)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

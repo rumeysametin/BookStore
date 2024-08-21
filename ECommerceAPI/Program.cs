@@ -50,10 +50,20 @@ builder.Services.AddDbContext<BookStoreContext>(options =>
 options.UseNpgsql("Host=localhost;Port=5432;Username=postgres;Database=bookdb;password=1234; Trust Server Certificate=true",
 o => o.SetPostgresVersion(new Version(11, 15))));
 
-builder.Services.AddCors(policyBuilder =>
-    policyBuilder.AddDefaultPolicy(policy =>
-        policy.WithOrigins("*").AllowAnyHeader().AllowAnyMethod())
-);
+//builder.Services.AddCors(policyBuilder =>
+//    policyBuilder.AddDefaultPolicy(policy =>
+//        policy.WithOrigins("*").AllowAnyHeader().AllowAnyMethod())
+//);
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyHeader()
+               .AllowAnyMethod();
+    });
+});
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<BookStoreContext>()
@@ -99,13 +109,15 @@ else
 
 app.UseHttpsRedirection();  // sýralamasý önemli
 
-app.UseRouting(); 
+app.UseRouting();
 
-app.UseCors(builder => builder
-.AllowAnyHeader()
-.AllowAnyMethod()
-.SetIsOriginAllowed((host) => true)
-.AllowCredentials());
+//app.UseCors(builder => builder
+//.AllowAnyHeader()
+//.AllowAnyMethod()
+//.SetIsOriginAllowed((host) => true)
+//.AllowCredentials());
+
+app.UseCors("AllowAll");
 
 app.UseAuthentication();
 

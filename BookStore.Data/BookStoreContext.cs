@@ -11,11 +11,10 @@ namespace BookStore.Data
 
     {
         public BookStoreContext(DbContextOptions<BookStoreContext> options) : base(options) { }
-
-        
         public DbSet<Book> Books { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
+        public object ReadingLists { get; internal set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
