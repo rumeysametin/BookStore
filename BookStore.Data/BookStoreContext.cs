@@ -14,6 +14,7 @@ namespace BookStore.Data
         public DbSet<Book> Books { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<Category> categories { get; set; }
         public object ReadingLists { get; internal set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
