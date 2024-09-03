@@ -47,20 +47,21 @@ namespace ECommerceAPI.Controllers
         //    return CreatedAtAction(nameof(GetBook), new { id = book.BookID }, book);
         //}
         [HttpPost]
-        public async Task<ActionResult<Book>> PostBook([FromBody] Book book)
+        public async Task<ActionResult<Book>> PostBook([FromForm] Book book, IFormFile file)
         {
+            book.CoverImage= ConvertIFormFileToByteArray(file);
             if (book == null)
             {
                 return BadRequest("Book object is null");
             }
             await _bookLogic.AddBook(book);
-            return CreatedAtAction(nameof(GetBook), new { id = book.BookID }, book);
+            return CreatedAtAction(nameof(GetBook), new { id = book.Id }, book);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBook(int id, [FromBody] Book book)
         {
-            if (id != book.BookID)
+            if (id != book.Id)
             {
                 return BadRequest();
             }
@@ -74,6 +75,16 @@ namespace ECommerceAPI.Controllers
         {
             await _bookLogic.DeleteBook(id);
             return NoContent();
+        }
+
+        byte[] ConvertIFormFileToByteArray(IFormFile file)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                file.CopyTo(ms)
+;
+                return ms.ToArray();
+            }
         }
     }
 }

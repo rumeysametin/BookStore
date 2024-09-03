@@ -1,9 +1,6 @@
 ﻿using BookStore.Data.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BookStore.Data.Services
 {
@@ -18,10 +15,35 @@ namespace BookStore.Data.Services
 
         public Category Add(Category category)
         {
-            var result= _context.categories.Add(category);
+            var result = _context.categories.Add(category);
             _context.SaveChanges();
-
             return result.Entity;
+        }
+
+        public void Update(Category category)
+        {
+            _context.categories.Update(category);
+            _context.SaveChanges();
+        }
+
+        public void Delete(int id)
+        {
+            var category = _context.categories.Find(id);
+            if (category != null)
+            {
+                _context.categories.Remove(category);
+                _context.SaveChanges();
+            }
+        }
+
+        public Category GetById(int id)
+        {
+            return _context.categories.Find(id);
+        }
+
+        public List<Category> GetAll()
+        {
+            return _context.categories.ToList();
         }
     }
 }

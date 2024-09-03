@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
 using BookStore.Data.Services;
+using BookStore.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,7 @@ builder.Services.AddScoped<BookService>();
 builder.Services.AddScoped<BookLogic>();
 builder.Services.AddHttpClient<BookInfoService>(); // BookInfoService için HttpClient ekle
 builder.Services.AddScoped<BarcodeService>();
+builder.Services.AddScoped<ProductService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>    //Kimlik doðrulama þemasý, bu þemaya oluþan tokený ekleyince apileri daha kolay test edilir.
 {

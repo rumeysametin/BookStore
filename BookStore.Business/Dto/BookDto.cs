@@ -1,17 +1,15 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BookStore.Data.Models
+namespace BookStore.Business.Dto
 {
-    public class Book
+        public class BookDto
     {
-        [Key]
-        public int Id { get; set; }
+        public int BookID { get; set; }
         public string Title { get; set; }
         public string Author { get; set; }
         public string ISBN { get; set; }
@@ -24,5 +22,7 @@ namespace BookStore.Data.Models
         public int? CategoryId { get; set; }
         public byte[]? CoverImage { get; set; }
 
-    }   
+        public IFormFile UploadFile { get; set; }           
+
+    }
 }
